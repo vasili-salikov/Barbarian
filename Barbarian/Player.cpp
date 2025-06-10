@@ -1,8 +1,12 @@
 #include "Player.h"
 #include <iostream>
 
-Player::Player(sf::Image& img, float x, float y, int w, int h, std::string name) : Entity(img, x, y, w, h, name)
+Player::Player(sf::Image& img, std::string name, Level &lvl, float x, float y, int w, int h) : Entity(img, name, x, y, w, h)
 {
+	//initialise objects collection with all the objects from the map
+	objects = lvl.GetAllObjects();
+
+
 	//list of animation declaration 
 	animManager.create("stay", texture, 0, 4, 32, 32, 5, 4, 32);
 	animManager.create("walk", texture, 0, 36, 32, 32, 8, 10, 32);

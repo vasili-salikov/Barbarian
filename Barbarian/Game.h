@@ -6,6 +6,8 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include "Player.h"
+#include "Level.h"
 
 class Game
 {

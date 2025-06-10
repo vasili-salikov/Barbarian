@@ -13,14 +13,26 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Animation">
+    <Filter Include="Map">
+      <UniqueIdentifier>{770bd135-fa6a-4236-9f7a-2d7cd66b6613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\TinyXML %28library%29">
+      <UniqueIdentifier>{a9d2756a-8fcd-4d39-8a19-8abf57ce0147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Header Files">
+      <UniqueIdentifier>{0f94a3e0-1bbe-4f9f-9c2e-c8d31796935f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Source Files">
+      <UniqueIdentifier>{111336a3-4245-4411-8b2e-5f9feb9ca895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
       <UniqueIdentifier>{45148cb6-b932-48f7-8d30-8fc27c8d82de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\animation">
-      <UniqueIdentifier>{29a1248b-5e6e-4ca7-b01d-2ef33dab09ab}</UniqueIdentifier>
+    <Filter Include="Animation\Header Files">
+      <UniqueIdentifier>{9b7e6f65-0842-4274-9ca8-5118fa31085d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TinyXML">
-      <UniqueIdentifier>{a9d2756a-8fcd-4d39-8a19-8abf57ce0147}</UniqueIdentifier>
+    <Filter Include="Animation\Source Files">
+      <UniqueIdentifier>{ecb5d85e-926a-4d80-84a0-7b2a4ed62c49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,23 +48,29 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Source Files\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>Source Files\animation</Filter>
-    </ClCompile>
     <ClCompile Include="TinyXML\tinystr.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxml.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlerror.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Map\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Map\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animation\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Animation\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,17 +83,23 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Header Files\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Header Files\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="TinyXML\tinystr.h">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
     </ClInclude>
     <ClInclude Include="TinyXML\tinyxml.h">
-      <Filter>TinyXML</Filter>
+      <Filter>Map\TinyXML %28library%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Map\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Map\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animation\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Animation\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <memory> //for unique_ptr
 
 class Animation
 {

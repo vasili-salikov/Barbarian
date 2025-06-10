@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Player.h"
+
 
 Game::Game() 
 {
@@ -18,10 +18,15 @@ Game::~Game()
 
 void Game::startGame()
 {
+	Level lvl;
+	lvl.LoadFromFile("lvl1.tmx");
+
 	sf::Image heroImg;
 	heroImg.loadFromFile("resources/sprites/barbarian.png");
 
-	Player player = Player(heroImg, 0, 0, 32, 32, sf::String("Player"));
+	Player player = Player(heroImg, "Player", lvl, 0, 0, 32, 32);
+
+	
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -67,6 +72,7 @@ void Game::startGame()
 				}
 			}
 		}
+		lvl.Draw(window);
 		player.draw(window);
 		window.display();
 	}

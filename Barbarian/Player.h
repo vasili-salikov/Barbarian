@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include <map>
+#include "Level.h"
 
 class Player: public Entity
 {
@@ -9,7 +10,7 @@ public:
 
 	std::map<std::string, bool> key;
 
-	Player(sf::Image& img, float x, float y, int w, int h, std::string name);
+	Player(sf::Image& img, std::string name, Level &lvl, float x, float y, int w, int h);
 	void update(double &time);
 	void draw(sf::RenderWindow &w);
 };
