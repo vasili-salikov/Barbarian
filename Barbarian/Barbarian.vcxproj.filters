@@ -19,9 +19,12 @@
     <Filter Include="Source Files\animation">
       <UniqueIdentifier>{29a1248b-5e6e-4ca7-b01d-2ef33dab09ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{a9d2756a-8fcd-4d39-8a19-8abf57ce0147}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Barbarian.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
@@ -39,6 +42,18 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Source Files\animation</Filter>
     </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -55,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="AnimationManager.h">
       <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

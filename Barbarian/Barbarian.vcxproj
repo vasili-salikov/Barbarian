@@ -129,10 +129,14 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
-    <ClCompile Include="Barbarian.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxml.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -140,6 +144,8 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
