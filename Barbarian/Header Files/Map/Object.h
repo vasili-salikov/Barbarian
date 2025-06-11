@@ -11,7 +11,7 @@ struct Object
 
 	std::string name;
 	std::string type;
-	sf::Rect<float> rect;
+	sf::FloatRect rect;
 	std::map<std::string, std::string> properties;
 
 	sf::Sprite sprite;

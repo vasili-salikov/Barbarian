@@ -1,105 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{770bd135-fa6a-4236-9f7a-2d7cd66b6613}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map\TinyXML %28library%29">
+    <Filter Include="TinyXML %28library%29">
       <UniqueIdentifier>{a9d2756a-8fcd-4d39-8a19-8abf57ce0147}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\Header Files">
-      <UniqueIdentifier>{0f94a3e0-1bbe-4f9f-9c2e-c8d31796935f}</UniqueIdentifier>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{8b3b00c9-6adf-476c-ac99-845e72d6151b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\Source Files">
-      <UniqueIdentifier>{111336a3-4245-4411-8b2e-5f9feb9ca895}</UniqueIdentifier>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{99aba5ab-63ea-430c-a05f-60003aa416c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Animation">
-      <UniqueIdentifier>{45148cb6-b932-48f7-8d30-8fc27c8d82de}</UniqueIdentifier>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{aee6cf5d-3c58-48c2-816d-ac0e6a471be0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Animation\Header Files">
-      <UniqueIdentifier>{9b7e6f65-0842-4274-9ca8-5118fa31085d}</UniqueIdentifier>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{4af44c7e-eb6b-4149-86d4-1e178a457625}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Animation\Source Files">
-      <UniqueIdentifier>{ecb5d85e-926a-4d80-84a0-7b2a4ed62c49}</UniqueIdentifier>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{cf62368b-5d22-4bec-aee8-0f27169996ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Animation">
+      <UniqueIdentifier>{01f87816-2c32-42be-92da-8998fd1fa422}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TinyXML\tinystr.cpp">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxml.cpp">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlerror.cpp">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Map\Source Files</Filter>
+    <ClCompile Include="Source Files\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Map\Source Files</Filter>
+    <ClCompile Include="Source Files\Entity.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Animation\Source Files</Filter>
+    <ClCompile Include="Source Files\Game.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>Animation\Source Files</Filter>
+    <ClCompile Include="Source Files\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Map\Level.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Map\Object.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Animation\Animation.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Animation\AnimationManager.cpp">
+      <Filter>Source Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TinyXML\tinystr.h">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClInclude>
     <ClInclude Include="TinyXML\tinyxml.h">
-      <Filter>Map\TinyXML %28library%29</Filter>
+      <Filter>TinyXML %28library%29</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Map\Header Files</Filter>
+    <ClInclude Include="Header Files\Entity.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Map\Header Files</Filter>
+    <ClInclude Include="Header Files\Game.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Animation\Header Files</Filter>
+    <ClInclude Include="Header Files\Player.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Animation\Header Files</Filter>
+    <ClInclude Include="Header Files\Animation\Animation.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Animation\AnimationManager.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Map\Level.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Map\Object.h">
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

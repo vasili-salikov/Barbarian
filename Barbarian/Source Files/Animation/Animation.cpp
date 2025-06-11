@@ -1,6 +1,7 @@
 #pragma once
-#include "Animation.h"
+#include "../../Header Files/Animation/Animation.h"
 #include <iostream>
+
 Animation::Animation() {}
 
 Animation::Animation(sf::Texture& t, int x, int y, int w, int h, int count, double Speed, int stepX = 0, int stepY = 0)

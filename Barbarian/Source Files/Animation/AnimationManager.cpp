@@ -1,4 +1,4 @@
-#include "AnimationManager.h"
+#include "../../Header Files/Animation/AnimationManager.h"
 
 void AnimationManager::create(std::string name, sf::Texture& t, int x, int y, int w, int h, int count, double speed, int stepX, int stepY)
 {

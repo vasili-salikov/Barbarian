@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "Object.h"
-#include "TinyXML/tinyxml.h"
+#include "../../TinyXML/tinyxml.h"
 #include <iostream> //for error messages
 
 struct Layer// <layer> elements from tmx
@@ -13,7 +13,8 @@ struct Layer// <layer> elements from tmx
 class Level
 {
 public:
-	bool LoadFromFile(std::string filename); // Returns false if loading failed
+	Level(std::string pathToMapFile); //load from file
+
 	Object GetObject(std::string name);
 	std::vector<Object> GetObjects(std::string name);// get the first object with given name
 	std::vector<Object> GetAllObjects();// get all the objects with given name
@@ -27,4 +28,6 @@ private:
 	sf::Texture tilesetImage;
 	std::vector<Object> objects;//all the objects on the map
 	std::vector<Layer> layers;
+
+	bool LoadFromFile(std::string filename); // Returns false if loading failed
 };

@@ -1,4 +1,10 @@
-﻿#include "Level.h"
+﻿#include "../../Header Files/Map/Level.h"
+
+Level::Level(std::string pathToMapFile)
+{
+	if (!LoadFromFile(pathToMapFile))
+		throw std::runtime_error("Loading level from file: '" + pathToMapFile + "'  failed.");
+}
 
 bool Level::LoadFromFile(std::string filename)
 {

@@ -7,20 +7,25 @@
 #include <mutex>
 #include <fstream>
 #include "Player.h"
-#include "Level.h"
+#include "Map/Level.h"
 
 class Game
 {
 private:
-	std::fstream fs;
 	sf::Clock clock;
 	sf::RenderWindow window;
+	sf::View view;
+	Level lvl;
+	Player player;
+
+	//std::fstream fs;
 	//sf::Event event;
-	std::mutex mtx;
+	//std::mutex mtx;
 	double time;
 
 public:
-	Game();
-	~Game();
+	Game(std::string pathToMapFile, std::string pathToPlayerSprite);
+
 	void startGame();
+	void updateCameraPosition(double currentPlayerXposition, double currentPlayerYposition);
 };

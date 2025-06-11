@@ -1,4 +1,4 @@
-﻿#include "Object.h"
+﻿#include "../../Header Files/Map/Object.h"
 
 Object::Object(sf::Sprite sprite):
 	sprite(sprite) {}
