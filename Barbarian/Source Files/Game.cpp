@@ -26,7 +26,6 @@ void Game::startGame()
 		//time = time / 4500; //slowmo
 
 		window.clear();
-		lvl.Draw(window);
 		// update player and camera
 		player.update(time);
 		updateCameraPosition(player.getRect().position.x, player.getRect().position.y); // Move the camera to follow the player
@@ -48,7 +47,7 @@ void Game::startGame()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) player.key["Right"] = true;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) player.key["Space"] = true;
 
-		
+		lvl.Draw(window);
 		player.draw(window);
 		window.display();
 	}

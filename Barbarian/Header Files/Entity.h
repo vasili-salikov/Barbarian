@@ -12,9 +12,6 @@ public:
 	sf::Texture texture;
 	std::string name;
 
-	bool isMoving, onGround;
-
 	Entity(sf::Image img, std::string name, sf::FloatRect rect);
-	// get position and size
-	sf::FloatRect getRect() const;
+	sf::FloatRect getRect() const;// get position and size
 };

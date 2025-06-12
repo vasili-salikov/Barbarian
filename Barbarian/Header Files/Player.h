@@ -12,8 +12,7 @@ public:
 	float dx, dy;
 	int dir, health;//
 	
-	double stom,  timer, force;//
-	bool  ATTACK, HURT, onLadder, fusrodah, alive, shot;//
+	bool onLadder, isAlive, onGround, isAttacking;
 
 	Player(sf::Image img, std::string name, Level &lvl, sf::FloatRect rect);
 	void update(double time);
@@ -21,9 +20,15 @@ public:
 
 private:
 	void checkCollision(float Dx, float Dy);
-	void handleControls();
 	std::string getCurrentStateAsString();
 	void standUp(); // Switch hero to standing state (restore full height)
 	void sitDown(); // Switch hero to sitting state (shrink model)
+
+	void handleControls();
+	void handleHorizontalMovement();
+	void handleVerticalMovement();
+	void handleLadderMovement();
+	void handleStandUpTransition();
+	void handleAttack();
 
 };
