@@ -42,6 +42,11 @@ double AnimationManager::getCurrentFrame()
 	return animList[currentAnim].getCurrentFrame(); 
 }
 
+std::string AnimationManager::getCurrentAnimationName()
+{
+	return currentAnim;
+}
+
 void AnimationManager::setScale(sf::Vector2f size) 
 { 
 	animList[currentAnim].getSprite()->setScale(size);

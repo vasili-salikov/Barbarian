@@ -2,12 +2,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <list>
-#include <thread>
-#include <mutex>
-#include <fstream>
 #include "Player.h"
 #include "Map/Level.h"
+//#include <thread>
+//#include <mutex>
+//#include <fstream>
+//#include <list>
 
 class Game
 {

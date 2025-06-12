@@ -7,13 +7,11 @@ class Player: public Entity
 {
 public:
 	enum { stay, walk, jump, attack, hurt, down, crawl, die, ladder, FusRoDah } STATE;
-	std::map<std::string, bool> key;
-	float speed;
+	std::map<std::string, bool> key; //map of pressed buttons
 
 	float dx, dy;
 	int dir, health;//
 	
-	int drawX, drawY;//
 	double stom,  timer, force;//
 	bool  ATTACK, HURT, onLadder, fusrodah, alive, shot;//
 
@@ -24,6 +22,8 @@ public:
 private:
 	void checkCollision(float Dx, float Dy);
 	void handleControls();
-	void checkCollision(int horizontal);
-	//void keyCheck(double time);
+	std::string getCurrentStateAsString();
+	void standUp(); // Switch hero to standing state (restore full height)
+	void sitDown(); // Switch hero to sitting state (shrink model)
+
 };
