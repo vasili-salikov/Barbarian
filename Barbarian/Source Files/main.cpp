@@ -4,7 +4,7 @@
 int main()
 {   
     //pathes relative to Barbarian.vcxproj not main.cpp
-    const std::string pathToMapFile = "resources/maps/lvl1.tmx";
+    const std::string pathToMapFile = "lvl1.tmx";
     const std::string pathToPlayerSprite = "resources/sprites/barbarian.png";
 
     Game game(pathToMapFile, pathToPlayerSprite);

@@ -19,6 +19,6 @@ public:
 	void play();
 	double getCurrentFrame();
 	std::string getCurrentAnimationName();
-	void setScale(sf::Vector2f size);
+	void setScale(sf::Vector2f factors);
 	void restart();
 };

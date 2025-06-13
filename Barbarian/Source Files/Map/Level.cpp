@@ -2,11 +2,11 @@
 
 Level::Level(std::string pathToMapFile)
 {
-	if (!LoadFromFile(pathToMapFile))
+	if (!loadFromFile(pathToMapFile))
 		throw std::runtime_error("Loading level from file: '" + pathToMapFile + "'  failed.");
 }
 
-bool Level::LoadFromFile(std::string filename)
+bool Level::loadFromFile(std::string filename)
 {
 	//whole tmx document
 	TiXmlDocument levelFile(filename.c_str()); //load file into TiXmlDocument (TinyXML library)
@@ -126,7 +126,6 @@ bool Level::LoadFromFile(std::string filename)
 			// If a <tile> tag doesn't have a "gid" attribute, set tileGID = 0
 			const char* attr = tileElement->Attribute("gid");
 			int tileGID = attr ? atoi(attr) : 0;
-			//int tileGID = atoi(tileElement->Attribute("gid")); // unsafe version (removed)
 			int subRectToUse = tileGID - firstTileID;
 
 			// Set the texture rectangle for each tile
@@ -137,15 +136,7 @@ bool Level::LoadFromFile(std::string filename)
 				sprite.setPosition(sf::Vector2f(x * tileWidth, y * tileHeight));
 				sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
 
-				layer.tiles.push_back(sprite);//закидываем в слой спрайты тайлов
-
-				//sf::Sprite sprite;
-				//sprite.setTexture(tilesetImage);
-				//sprite.setTextureRect(subRects[subRectToUse]);
-				//sprite.setPosition(x * tileWidth, y * tileHeight);
-				//sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
-
-				//layer.tiles.push_back(sprite);//закидываем в слой спрайты тайлов
+				layer.tiles.push_back(sprite);
 			}
 
 			tileElement = tileElement->NextSiblingElement("tile");
@@ -200,11 +191,6 @@ bool Level::LoadFromFile(std::string filename)
 				sprite.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(0, 0)));
 				sprite.setPosition(sf::Vector2f(x, y));
 
-				/*sf::Sprite sprite;
-				sprite.setTexture(tilesetImage);
-				sprite.setTextureRect(sf::Rect<int>(0, 0, 0, 0));
-				sprite.setPosition(x, y);*/
-
 				if (objectElement->Attribute("width") != NULL)
 				{
 					width = atoi(objectElement->Attribute("width"));
@@ -216,18 +202,7 @@ bool Level::LoadFromFile(std::string filename)
 					height = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].size.y;
 
 					sprite.setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
-
-					/*width = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].width;
-					height = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].height;*/
-					//sprite.setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
 				}
-
-				// Object instance
-				//Object object;
-				//object.name = objectName;
-				//object.type = objectType;
-				//object.sprite = sprite;
-
 				//Object instance
 				sf::FloatRect objectRect;
 				objectRect.position.y = y;
@@ -257,10 +232,7 @@ bool Level::LoadFromFile(std::string filename)
 						}
 					}
 				}
-
-
 				objects.push_back(object);
-
 				objectElement = objectElement->NextSiblingElement("object");
 			}
 			objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
@@ -273,38 +245,57 @@ bool Level::LoadFromFile(std::string filename)
 
 	return true;
 }
-
-Object Level::GetObject(std::string name)
+Object& Level::getObjectByReference(std::string name)
+{
+	//for (int i = 0; i < objects.size(); i++)
+	//	if (objects[i].name == name)
+	//		return objects[i];
+	for (auto& item : objects)
+		if (item.name == name)
+			return item;
+}
+Object Level::getObject(std::string name)
 {
 	// get the first object with given name
-	for (int i = 0; i < objects.size(); i++)
-		if (objects[i].name == name)
-			return objects[i];
+	//for (int i = 0; i < objects.size(); i++)
+	//	if (objects[i].name == name)
+	//		return objects[i];
+
+	for (auto& item : objects)
+		if (item.name == name)
+			return item;
 }
 
-std::vector<Object> Level::GetObjects(std::string name)
+std::vector<Object> Level::getObjects(std::string name)
 {
 	// get all the objects with given name
 	std::vector<Object> vec;
-	for (int i = 0; i < objects.size(); i++)
+	/*for (int i = 0; i < objects.size(); i++)
 		if (objects[i].name == name)
-			vec.push_back(objects[i]);
+			vec.push_back(objects[i]);*/
+	for (auto& item : objects)
+		if (item.name == name)
+			vec.push_back(item);
 
 	return vec;
 }
 
-std::vector<Object> Level::GetAllObjects()
+std::vector<Object> Level::getAllObjects()
 {
 	return objects;
 };
+std::vector<Object>* Level::getAllObjectsByReference()
+{
+	return &objects;
+}
 
 
-sf::Vector2i Level::GetTileSize() //get tile size (initial information from the map document)
+sf::Vector2i Level::getTileSize() //get tile size (initial information from the map document)
 {
 	return sf::Vector2i(tileWidth, tileHeight);
 }
 
-void Level::Draw(sf::RenderWindow& window)
+void Level::draw(sf::RenderWindow& window)
 {
 	// Draw all the tiles (objects do not draw!)
 	for (int layer = 0; layer < layers.size(); layer++)

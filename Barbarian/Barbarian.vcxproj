@@ -129,12 +129,16 @@
   <ItemGroup>
     <ClCompile Include="Source Files\Animation\Animation.cpp" />
     <ClCompile Include="Source Files\Animation\AnimationManager.cpp" />
+    <ClCompile Include="Source Files\DynamicEntity .cpp" />
+    <ClCompile Include="Source Files\Sheep.cpp" />
+    <ClCompile Include="Source Files\Skeleton.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\Map\Level.cpp" />
     <ClCompile Include="Source Files\Map\Object.cpp" />
     <ClCompile Include="Source Files\Player.cpp" />
+    <ClCompile Include="Source Files\StaticEntity.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
@@ -143,11 +147,15 @@
   <ItemGroup>
     <ClInclude Include="Header Files\Animation\Animation.h" />
     <ClInclude Include="Header Files\Animation\AnimationManager.h" />
+    <ClInclude Include="Header Files\DynamicEntity.h" />
+    <ClInclude Include="Header Files\Sheep.h" />
+    <ClInclude Include="Header Files\Skeleton.h" />
     <ClInclude Include="Header Files\Entity.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Map\Level.h" />
     <ClInclude Include="Header Files\Map\Object.h" />
     <ClInclude Include="Header Files\Player.h" />
+    <ClInclude Include="Header Files\StaticEntity.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
   </ItemGroup>

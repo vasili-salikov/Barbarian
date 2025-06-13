@@ -47,9 +47,9 @@ std::string AnimationManager::getCurrentAnimationName()
 	return currentAnim;
 }
 
-void AnimationManager::setScale(sf::Vector2f size) 
+void AnimationManager::setScale(sf::Vector2f factors)
 { 
-	animList[currentAnim].getSprite()->setScale(size);
+	animList[currentAnim].getSprite()->setScale(factors);
 }
 
 void AnimationManager::restart() 

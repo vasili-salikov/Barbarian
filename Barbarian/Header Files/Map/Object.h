@@ -3,11 +3,11 @@
 #include <map>
 #include <memory> //for unique_ptr
 
-struct Object
+struct Object //map object
 {
-	int GetPropertyInt(std::string name);
-	float GetPropertyFloat(std::string name);
-	std::string GetPropertyString(std::string name);
+	int getPropertyInt(std::string name);
+	float getPropertyFloat(std::string name);
+	std::string getPropertyString(std::string name);
 
 	std::string name;
 	std::string type;

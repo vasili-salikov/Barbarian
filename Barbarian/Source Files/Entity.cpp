@@ -12,3 +12,8 @@ sf::FloatRect Entity::getRect() const
 {
 	return rect;
 }
+
+std::string Entity::getName() const
+{
+	return name;
+}

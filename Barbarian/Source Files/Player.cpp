@@ -1,12 +1,23 @@
 #include "../Header Files/Player.h"
 #include <iostream>
 
-Player::Player(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect) : Entity(img, name, rect)
+Player::Player(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect) : 
+	DynamicEntity(img, name, rect),
+	testRect(lvl.getObjectByReference("player").rect)
 {
+	//this->testObj = lvl.getObjectByReference("player");
+	//rect = testObj->rect;
+	//testRect = &lvl.getObjectByReference("player").rect;
+	//this->rect = lvl.getObjectByReference("player").rect;
+
+	STATE = stay;
+	isAttacking = false;
+	onGround = true;
+	onLadder = false;
 	//initialise objects collection with all the objects from the map
 	health = 100;
 	isAlive = true;
-	objects = lvl.GetAllObjects();
+	objects = lvl.getAllObjects();
 
 	//list of animation declaration 
 	anim.create("stay", texture, 0, 4, 32, 32, 5, 0.003, 32);
@@ -19,129 +30,6 @@ Player::Player(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect) 
 	anim.create("die", texture, 0, 132, 32, 32, 7, 0.002, 32);
 	anim.create("ladder", texture, 0, 164, 32, 28, 2, 0.003, 32);
 	anim.create("FusRoDah", texture, 0, 196, 32, 28, 4, 0.002, 32);
-}
-void Player::handleHorizontalMovement()
-{
-	if (key["Left"] || key["Right"])
-	{
-
-		dir = (int)key["Left"]; //if the left key is pressed than direction is 1 otherwise 0
-
-		dx = dir ? -0.08 : 0.08; //if direction left dx is negative and vice versa
-
-		if (STATE == down || STATE == crawl)
-		{
-			STATE = crawl;
-			dx = dir ? -0.03 : 0.03;
-		}
-		if (onGround && STATE != crawl)
-			STATE = walk;
-	}
-	else //left and right are not pressed
-	{
-		dx = 0;
-		if (STATE == walk)
-			STATE = stay;
-		else if (STATE == crawl || STATE == down)
-			STATE = down;
-	}
-}
-
-void Player::handleVerticalMovement()
-{
-	if (key["Up"] || key["Down"])
-	{
-		if (onGround)
-		{
-			//cant jump if sitting or crawling
-			if (key["Up"] && STATE != down && STATE != crawl)
-			{
-				onGround = false;
-				STATE = jump;
-				dy = -0.2;
-			}
-			else //key down
-			{
-				if (!isAttacking) //cannot sit when attacking
-				{
-					sitDown(); //shrinks body
-					if (STATE != crawl)
-						STATE = down;
-				}
-			}
-		}
-	}
-	else
-	{
-		// if onGround + is not moving + not sitting -> stand up
-		if (onGround && dx == 0 && STATE != down)
-			STATE = stay;
-		// if in flight and attack animation ended -> back to jump animation
-		else if (!isAttacking && STATE == attack)
-			STATE = jump;
-	}
-}
-
-void Player::handleLadderMovement()
-{
-	if (onLadder && !isAttacking)
-	{
-		if (STATE == down || STATE == crawl)
-			standUp();
-
-		STATE = ladder;
-		
-		if (anim.getCurrentAnimationName() == "attack") // Fix: switch to ladder animation after attack animation ends
-			anim.set("ladder"); 
-		
-		anim.play(); // Fix: resume animation when the player starts climbing again after stopping
-
-		//freeze on a ladder (do not play animation and do not move)
-		if (!key["Up"] && !key["Down"])
-		{
-			dy = 0;
-			anim.pause();
-		}
-		else
-			dy = key["Up"] ? -0.025 : 0.025;
-	}
-}
-
-void Player::handleStandUpTransition()
-{
-	if (!key["Down"] && (STATE == down || STATE == crawl))
-	{
-		// Check if there's space above to stand up (temporary solution — should be improved)
-		bool topCollision = false;
-
-		//imagine we are standing
-		sf::FloatRect tempRect = rect;
-		tempRect.size.y = 24;
-		tempRect.position.y -= 12;
-
-		//check collision in standing case
-		for (const auto& obj : objects)
-		{
-			if (tempRect.findIntersection(obj.rect) && obj.name == "solid")
-			{
-				topCollision = true;
-				STATE = (dx != 0) ? crawl : down;
-				break;
-			}
-		}
-		//if no collision - stand up
-		if (!topCollision)
-		{
-			STATE = stay;
-			standUp();
-		}
-	}
-}
-
-void Player::handleAttack()
-{
-	if (key["Space"] && STATE != down && STATE != crawl) //cannot attack when sitting or crawling
-		isAttacking = true;
 }
 
 void Player::handleControls()
@@ -156,7 +44,7 @@ void Player::handleControls()
 	}
 }
 
-void Player::update(double time)
+void Player::update(double time) 
 {
 	handleControls();
 
@@ -203,15 +91,20 @@ void Player::update(double time)
 
 	anim.tick(time);
 	key["Right"] = key["Left"] = key["Up"] = key["Down"] = key["Space"] = false;
+
+	//testObj->rect.position.x = rect.position.x;
+	//testObj->rect.position.y = rect.position.y;
+	testRect.position.x = rect.position.x;
+	testRect.position.y = rect.position.y;
 }
 
 void Player::draw(sf::RenderWindow& w)
 {
 #pragma region Make player body visible(debug)
-	sf::RectangleShape playerRect(sf::Vector2f(rect.size.x, rect.size.y));
-	playerRect.setFillColor(sf::Color::Green);
-	playerRect.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
-	w.draw(playerRect);
+	//sf::RectangleShape playerRect(sf::Vector2f(rect.size.x, rect.size.y));
+	//playerRect.setFillColor(sf::Color::Green);
+	//playerRect.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
+	//w.draw(playerRect);
 #pragma endregion
 
 	int magicOffsetX = -10; // required x-offset for player's sprite
@@ -300,5 +193,129 @@ void Player::sitDown()
 {
 	rect.size.y = 12;
 	//todo manage get rid of jump when trying to sit
+}
+
+void Player::handleHorizontalMovement()
+{
+	if (key["Left"] || key["Right"])
+	{
+
+		dir = (int)key["Left"]; //if the left key is pressed than direction is 1 otherwise 0
+
+		dx = dir ? -0.08 : 0.08; //if direction left dx is negative and vice versa
+
+		if (STATE == down || STATE == crawl)
+		{
+			STATE = crawl;
+			dx = dir ? -0.03 : 0.03;
+		}
+		if (onGround && STATE != crawl)
+			STATE = walk;
+	}
+	else //left and right are not pressed
+	{
+		dx = 0;
+		if (STATE == walk)
+			STATE = stay;
+		else if (STATE == crawl || STATE == down)
+			STATE = down;
+	}
+}
+
+void Player::handleVerticalMovement()
+{
+	if (key["Up"] || key["Down"])
+	{
+		if (onGround)
+		{
+			//cant jump if sitting or crawling
+			if (key["Up"] && STATE != down && STATE != crawl)
+			{
+				onGround = false;
+				STATE = jump;
+				dy = -0.2;
+			}
+			else //key down
+			{
+				if (!isAttacking) //cannot sit when attacking
+				{
+					sitDown(); //shrinks body
+					if (STATE != crawl)
+						STATE = down;
+				}
+			}
+		}
+	}
+	else
+	{
+		// if onGround + is not moving + not sitting -> stand up
+		if (onGround && dx == 0 && STATE != down)
+			STATE = stay;
+		// if in flight and attack animation ended -> back to jump animation
+		else if (!isAttacking && STATE == attack)
+			STATE = jump;
+	}
+}
+
+void Player::handleLadderMovement()
+{
+	if (onLadder && !isAttacking)
+	{
+		if (STATE == down || STATE == crawl)
+			standUp();
+
+		STATE = ladder;
+
+		if (anim.getCurrentAnimationName() == "attack") // Fix: switch to ladder animation after attack animation ends
+			anim.set("ladder");
+
+		anim.play(); // Fix: resume animation when the player starts climbing again after stopping
+
+		//freeze on a ladder (do not play animation and do not move)
+		if (!key["Up"] && !key["Down"])
+		{
+			dy = 0;
+			anim.pause();
+		}
+		else
+			dy = key["Up"] ? -0.025 : 0.025;
+	}
+}
+
+void Player::handleStandUpTransition()
+{
+	if (!key["Down"] && (STATE == down || STATE == crawl))
+	{
+		// Check if there's space above to stand up (temporary solution — should be improved)
+		bool topCollision = false;
+
+		//imagine we are standing
+		sf::FloatRect tempRect = rect;
+		tempRect.size.y = 24;
+		tempRect.position.y -= 12;
+
+		//check collision in standing case
+		for (const auto& obj : objects)
+		{
+			if (tempRect.findIntersection(obj.rect) && obj.name == "solid")
+			{
+				topCollision = true;
+				STATE = (dx != 0) ? crawl : down;
+				break;
+			}
+		}
+		//if no collision - stand up
+		if (!topCollision)
+		{
+			STATE = stay;
+			standUp();
+		}
+	}
+}
+
+void Player::handleAttack()
+{
+	if (key["Space"] && STATE != down && STATE != crawl) //cannot attack when sitting or crawling
+		isAttacking = true;
 }
 

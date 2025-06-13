@@ -4,6 +4,8 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "Map/Level.h"
+#include "Skeleton.h"
+#include "Sheep.h"
 //#include <thread>
 //#include <mutex>
 //#include <fstream>
@@ -16,7 +18,8 @@ private:
 	sf::RenderWindow window;
 	sf::View view;
 	Level lvl;
-	Player player;
+	Player* player;
+	std::vector<Entity*> entities; //collection of object in the game to interact with
 
 	//std::fstream fs;
 	//sf::Event event;

@@ -11,18 +11,18 @@ Object::Object(sf::Sprite sprite, std::string name, std::string type, sf::FloatR
 	this->rect = rect;
 }
 
-int Object::GetPropertyInt(std::string name) 
+int Object::getPropertyInt(std::string name) 
 {
 	return atoi(properties[name].c_str());
 }
 
-float Object::GetPropertyFloat(std::string name)
+float Object::getPropertyFloat(std::string name)
 {
 	return strtod(properties[name].c_str(), NULL);
 }
 
 //get name as a string
-std::string Object::GetPropertyString(std::string name)
+std::string Object::getPropertyString(std::string name)
 {
 	return properties[name];
 }

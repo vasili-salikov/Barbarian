@@ -1,9 +1,14 @@
 #include "../Header Files/Game.h"
 
 
-Game::Game(std::string pathToMapFile, std::string pathToPlayerSprite) 
-	: lvl(pathToMapFile), player(sf::Image(pathToPlayerSprite), "Player", lvl, lvl.GetObject("player").rect)
+Game::Game(std::string pathToMapFile, std::string pathToPlayerSprite) :
+	lvl(pathToMapFile)
+	//player(sf::Image(pathToPlayerSprite), "Player", lvl, lvl.GetObject("player").rect)
 {
+	sf::FloatRect test = lvl.getObject("player").rect;
+	player = new Player(sf::Image(pathToPlayerSprite), "player", lvl, test);
+
+	
 	view = sf::View(sf::FloatRect(sf::Vector2f(0, 100), sf::Vector2f(512, 288)));
 
 	window.create(sf::VideoMode({ 512, 288 }), "Barbarian"); // 16:9 ratio small picture (according to tiles size)
@@ -16,6 +21,17 @@ Game::Game(std::string pathToMapFile, std::string pathToPlayerSprite)
 
 void Game::startGame()
 {
+	std::vector<Object> e = lvl.getObjects("enemy");
+	Object sheep = lvl.getObject("sheep");
+	sf::Image sheepImage = sf::Image("resources/sprites/sheep.png");
+	entities.push_back(new Sheep(sheepImage, "sheep", lvl, sheep.rect));
+
+	for (auto& enemy : e)
+	{
+		sf::Image skeletonImage = sf::Image("resources/sprites/skeleton.png");
+		entities.push_back(new Skeleton(skeletonImage,"enemy",lvl,enemy.rect));
+	}
+
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -27,9 +43,18 @@ void Game::startGame()
 
 		window.clear();
 		// update player and camera
-		player.update(time);
-		updateCameraPosition(player.getRect().position.x, player.getRect().position.y); // Move the camera to follow the player
+		player->update(time);
+		updateCameraPosition(player->getRect().position.x, player->getRect().position.y); // Move the camera to follow the player
 		window.setView(view); // refresh camera
+
+		auto playerRect = lvl.getObject("player").rect;
+		std::cout << "x: " << playerRect.position.x << " ,y:" << playerRect.position.y << std::endl;
+
+		//update all entities
+		for (auto& entity : entities)
+		{
+			entity->update(time);
+		}
 
 		while (const std::optional event = window.pollEvent())
 		{
@@ -41,14 +66,21 @@ void Game::startGame()
 
 		// Real-time input polling: required for holding keys (e.g. continuous movement).
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) window.close();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) player.key["Up"] = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) player.key["Down"] = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) player.key["Left"] = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) player.key["Right"] = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) player.key["Space"] = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) player->key["Up"] = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) player->key["Down"] = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) player->key["Left"] = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) player->key["Right"] = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) player->key["Space"] = true;
 
-		lvl.Draw(window);
-		player.draw(window);
+		lvl.draw(window);
+
+		//draw all entities
+		for (auto& entity : entities)
+		{
+			entity->draw(window);
+		}
+
+		player->draw(window);
 		window.display();
 	}
 }
