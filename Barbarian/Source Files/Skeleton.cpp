@@ -1,13 +1,10 @@
 #include "../Header Files/Skeleton.h"
 
-Skeleton::Skeleton(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect) :
-	DynamicEntity(img, name, rect)
+Skeleton::Skeleton(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<Object*> objectsToInteractWith) :
+	DynamicEntity(img, name, rect, objectsToInteractWith)
 {
 	isAttacking = false;
 	isAlive = true;
-	//objects.push_back(lvl.getObject("player"));
-	//objects.push_back(lvl.getObjects("solidforenemy"));
-	objects = lvl.getObjects("solidforenemy");
 	
 	anim.create("stay", texture, 0, 192, 64, 64, 4, 0.003, 64);
 	anim.create("walk", texture, 0, 128, 64, 64, 12, 0.004, 64);
@@ -50,14 +47,14 @@ void Skeleton::checkCollision(float Dx, float Dy)
 	for (const auto& obj : objects)
 	{
 		// Check if there colission with the player
-		if (rect.findIntersection(obj.rect))
+		if (rect.findIntersection(obj->rect))
 		{
-			if (obj.name == "solidforenemy")
+			if (obj->name == "solidforenemy")
 			{
 				if (Dx > 0)
 				{
 					//position x = object position x - width of current object
-					rect.position.x = obj.rect.position.x - rect.size.x;
+					rect.position.x = obj->rect.position.x - rect.size.x;
 					
 					dir = 1;
 					dx = -0.03;
@@ -65,10 +62,15 @@ void Skeleton::checkCollision(float Dx, float Dy)
 				if (Dx < 0)
 				{
 					//position x = object position x + width of current object
-					rect.position.x = obj.rect.position.x + obj.rect.size.x;
+					rect.position.x = obj->rect.position.x + obj->rect.size.x;
 					dir = 0;
 					dx = 0.03;
 				}
+			}
+			if (obj->name == "player")
+			{
+				//std::cout << "Collision with player" << std::endl;
+				isAttacking = true;
 			}
 		}
 	}

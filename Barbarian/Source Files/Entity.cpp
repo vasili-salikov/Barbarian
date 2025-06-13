@@ -1,10 +1,9 @@
 #include "../Header Files/Entity.h"
 
-Entity::Entity(sf::Image img, std::string name, sf::FloatRect rect)
+Entity::Entity(sf::Image img, std::string name, sf::FloatRect& rect):
+	rect(rect)
 {
 	this->name = name;
-	this->rect = rect;
-
 	texture.loadFromImage(img);
 }
 

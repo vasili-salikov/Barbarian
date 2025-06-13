@@ -9,11 +9,16 @@ class Entity
 protected:
 	std::string name;
 	sf::Texture texture;
-	sf::FloatRect rect;
+
+	// "rect" represents the physical bounds of the entity as defined in the map file.
+	// It is passed and stored by reference to ensure that any changes made elsewhere 
+	// (e.g. during collision handling or movement) are consistently reflected across the system.
+	sf::FloatRect& rect;
+
 	//AnimationManager anim;
 	//std::vector<Object> objects; //map objects
 public:
-	Entity(sf::Image img, std::string name, sf::FloatRect rect);
+	Entity(sf::Image img, std::string name, sf::FloatRect& rect);
 
 	virtual void update(double time) = 0;
 	virtual void draw(sf::RenderWindow& w) = 0;

@@ -71,11 +71,6 @@ bool Level::loadFromFile(std::string filename)
 			rect.size.y = tileHeight; //rect.height
 			rect.size.x = tileWidth; // rect.width
 			
-			/*rect.top = y * tileHeight;
-			rect.left = x * tileWidth;
-			rect.height = tileHeight;
-			rect.width = tileWidth;*/
-
 			subRects.push_back(rect);
 		}
 
@@ -243,36 +238,39 @@ bool Level::loadFromFile(std::string filename)
 		std::cout << "No object layers found..." << std::endl;
 	}
 
+	for (auto& obj : objects)
+		objectsRefs.push_back(&obj);
 	return true;
 }
-Object& Level::getObjectByReference(std::string name)
+Object* Level::getObjectByReference(std::string name)
 {
-	//for (int i = 0; i < objects.size(); i++)
-	//	if (objects[i].name == name)
-	//		return objects[i];
+	for (auto& item : objects)
+		if (item.name == name)
+			return &item;
+	throw std::runtime_error("There is no '" + name + "'  object on the level.");
+}
+
+Object Level::getObjectByValue(std::string name)
+{
 	for (auto& item : objects)
 		if (item.name == name)
 			return item;
-}
-Object Level::getObject(std::string name)
-{
-	// get the first object with given name
-	//for (int i = 0; i < objects.size(); i++)
-	//	if (objects[i].name == name)
-	//		return objects[i];
-
-	for (auto& item : objects)
-		if (item.name == name)
-			return item;
+	throw std::runtime_error("There is no '" + name + "'  object on the level.");
 }
 
-std::vector<Object> Level::getObjects(std::string name)
+std::vector<Object*> Level::getObjectsByReference(std::string name)
 {
-	// get all the objects with given name
+	std::vector<Object*> refs;
+	for (auto& item : objectsRefs)
+		if (item->name == name)
+			refs.push_back(item);
+	return refs;
+}
+
+std::vector<Object> Level::getObjectsByValue(std::string name)
+{
 	std::vector<Object> vec;
-	/*for (int i = 0; i < objects.size(); i++)
-		if (objects[i].name == name)
-			vec.push_back(objects[i]);*/
+
 	for (auto& item : objects)
 		if (item.name == name)
 			vec.push_back(item);
@@ -280,13 +278,14 @@ std::vector<Object> Level::getObjects(std::string name)
 	return vec;
 }
 
-std::vector<Object> Level::getAllObjects()
+std::vector<Object> Level::getAllObjectsByValue()
 {
 	return objects;
 };
-std::vector<Object>* Level::getAllObjectsByReference()
+
+std::vector<Object*> Level::getAllObjectsByReference()
 {
-	return &objects;
+	return objectsRefs;
 }
 
 

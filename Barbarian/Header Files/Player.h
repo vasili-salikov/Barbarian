@@ -6,19 +6,17 @@
 class Player: public DynamicEntity
 {
 public:
-	enum { stay, walk, jump, attack, hurt, down, crawl, die, ladder, FusRoDah } STATE;
-	std::map<std::string, bool> key; //map of pressed buttons
-	int health;//
-	Object* testObj;
-	sf::FloatRect& testRect;
-	
+	std::map<std::string, bool> key; //map of pressed buttons	
 	bool onLadder, isAlive, onGround, isAttacking;
 
-	Player(sf::Image img, std::string name, Level &lvl, sf::FloatRect rect);
+	Player(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<Object*> objectsToInteractWith);
 	void update(double time) override;
 	void draw(sf::RenderWindow &w) override;
 
 private:
+	enum { stay, walk, jump, attack, hurt, down, crawl, die, ladder, FusRoDah } STATE;
+	int health;//
+
 	void checkCollision(float Dx, float Dy);
 	std::string getCurrentStateAsString();
 	void standUp(); // Switch hero to standing state (restore full height)

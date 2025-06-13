@@ -1,23 +1,12 @@
 #include "../Header Files/Player.h"
 #include <iostream>
 
-Player::Player(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect) : 
-	DynamicEntity(img, name, rect),
-	testRect(lvl.getObjectByReference("player").rect)
+Player::Player(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<Object*> objectsToInteractWith) :
+	DynamicEntity(img, name, rect, objectsToInteractWith)
 {
-	//this->testObj = lvl.getObjectByReference("player");
-	//rect = testObj->rect;
-	//testRect = &lvl.getObjectByReference("player").rect;
-	//this->rect = lvl.getObjectByReference("player").rect;
-
-	STATE = stay;
-	isAttacking = false;
-	onGround = true;
-	onLadder = false;
-	//initialise objects collection with all the objects from the map
 	health = 100;
+	isAttacking = onGround = onLadder = false;
 	isAlive = true;
-	objects = lvl.getAllObjects();
 
 	//list of animation declaration 
 	anim.create("stay", texture, 0, 4, 32, 32, 5, 0.003, 32);
@@ -53,7 +42,6 @@ void Player::update(double time)
 		STATE = attack;
 		if (anim.getCurrentFrame() > 6)
 		{
-			//std::cout << "isAttacking = false" << std::endl;
 			isAttacking = false;
 			anim.restart();
 		}
@@ -91,11 +79,6 @@ void Player::update(double time)
 
 	anim.tick(time);
 	key["Right"] = key["Left"] = key["Up"] = key["Down"] = key["Space"] = false;
-
-	//testObj->rect.position.x = rect.position.x;
-	//testObj->rect.position.y = rect.position.y;
-	testRect.position.x = rect.position.x;
-	testRect.position.y = rect.position.y;
 }
 
 void Player::draw(sf::RenderWindow& w)
@@ -120,41 +103,41 @@ void Player::checkCollision(float Dx, float Dy)
 	for (const auto& obj : objects)
 	{
 		// Check if there colission with the player
-		if (rect.findIntersection(obj.rect))
+		if (rect.findIntersection(obj->rect))
 		{
-			if (obj.name == "solid")
+			if (obj->name == "solid")
 			{
 				if (Dy > 0)
 				{
 					//position y = object position y - height of current object
-					rect.position.y = obj.rect.position.y - rect.size.y;
+					rect.position.y = obj->rect.position.y - rect.size.y;
 					dy = 0;
 					onGround = true;
 				}
 				if (Dy < 0)
 				{
 					//position y = object position y + height of current object
-					rect.position.y = obj.rect.position.y + obj.rect.size.y;
+					rect.position.y = obj->rect.position.y + obj->rect.size.y;
 					dy = 0;
 				}
 				if (Dx > 0)
 				{
 					//position x = object position x - width of current object
-					rect.position.x = obj.rect.position.x - rect.size.x;
+					rect.position.x = obj->rect.position.x - rect.size.x;
 					dx = 0;
 				}
 				if (Dx < 0)
 				{
 					//position x = object position x + width of current object
-					rect.position.x = obj.rect.position.x + obj.rect.size.x;
+					rect.position.x = obj->rect.position.x + obj->rect.size.x;
 					dx = 0;
 				}
 			}
-			if (obj.name == "ladder")
+			if (obj->name == "ladder")
 			{
 				onLadder = true;
 			}
-			if (obj.name == "pike")
+			if (obj->name == "pike")
 			{
 				health = 0;
 				dy = 0;
@@ -297,7 +280,7 @@ void Player::handleStandUpTransition()
 		//check collision in standing case
 		for (const auto& obj : objects)
 		{
-			if (tempRect.findIntersection(obj.rect) && obj.name == "solid")
+			if (tempRect.findIntersection(obj->rect) && obj->name == "solid")
 			{
 				topCollision = true;
 				STATE = (dx != 0) ? crawl : down;

@@ -6,8 +6,10 @@
 class Skeleton : public DynamicEntity
 {
 public:
+	//std::vector<Object>* testObjects; // map objects to interact with
+
 	bool isAttacking, isAlive;
-	Skeleton(sf::Image img, std::string name, Level& lvl, sf::FloatRect rect);
+	Skeleton(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<Object*> objectsToInteractWith);
 	void update(double time) override;
 	void draw(sf::RenderWindow& w);
 

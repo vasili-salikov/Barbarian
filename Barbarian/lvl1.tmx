@@ -8562,7 +8562,6 @@
   <object id="85" name="solid" x="224.367" y="288.417" width="31.2841" height="15.0833"/>
   <object id="87" name="solid" x="128.242" y="256.099" width="15.1591" height="2.08333"/>
   <object id="88" name="solidforenemy" x="633.25" y="321.083" width="12.6667" height="29.6667"/>
-  <object id="89" name="enemy" x="272.992" y="319.968" width="32" height="32"/>
   <object id="90" name="solid" x="639.284" y="336" width="480.784" height="47.1667"/>
   <object id="91" name="solid" x="528.679" y="240.48" width="254.784" height="13.9167"/>
   <object id="93" name="enemy" x="690.333" y="303.409" width="32" height="32"/>
@@ -8617,7 +8616,7 @@
   <object id="156" name="solidforenemy" x="194.333" y="538.667" width="12.6667" height="20"/>
   <object id="157" name="solidforenemy" x="4.66665" y="539" width="12.6667" height="20"/>
   <object id="158" name="solidforenemy" x="1231.67" y="538.667" width="12.6667" height="20"/>
-  <object id="159" name="sheep" x="389.229" y="320.271" width="32" height="32"/>
+  <object id="159" name="sheep" x="262.229" y="319.938" width="256" height="32"/>
   <object id="161" name="solid" x="1265.27" y="516.989" width="6.784" height="10.0212"/>
  </objectgroup>
 </map>
