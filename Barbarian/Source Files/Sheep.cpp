@@ -5,15 +5,14 @@ Sheep::Sheep(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<O
 {
 	isRunning = false;
 	beee = false;
-	inDanger = false;
 	timer = 0;
 
-	anim.create("stay", texture, 0, 0, 64, 64, 19, 0.003, 64, 0);
-	anim.create("beee", texture, 0, 62, 64, 64, 9, 0.003, 64, 0);
-	anim.create("run", texture, 0, 128, 64, 64, 5, 0.003, 64, 0);
+	anim.create("stay", texture, { 0, 0 }, { 64, 64 }, 19, 0.003, { 64, 0 });
+	anim.create("beee", texture, { 0, 62 }, { 64, 64 }, 9, 0.003, { 64, 0 });
+	anim.create("run", texture, { 0, 128 }, { 64, 64 }, 5, 0.003, { 64, 0 });
 }
 
-void Sheep::update(double time)
+void Sheep::update(float time)
 {
 	//std::cout << timer << std::endl;
 	anim.set("stay");
@@ -30,7 +29,6 @@ void Sheep::update(double time)
 
 	if (isRunning)
 	{
-		inDanger = false;
 		timer += time;
 		anim.set("run");
 
@@ -63,8 +61,8 @@ void Sheep::draw(sf::RenderWindow& w)
 	int magicOffsetY = +4; // required y-offset for the sprite
 
 	anim.flip(dir);
-	anim.setScale(sf::Vector2f(0.5, 0.5));
-	anim.draw(w, rect.position.x + magicOffsetX, rect.position.y + magicOffsetY);
+	anim.setScale({ 0.5, 0.5 });
+	anim.draw(w, { rect.position.x + magicOffsetX, rect.position.y + magicOffsetY });
 }
 
 void Sheep::checkCollision(float Dx, float Dy)
@@ -97,11 +95,6 @@ void Sheep::checkCollision(float Dx, float Dy)
 			if (obj->name == "player")
 			{
 				beee = true;
-				if (inDanger)
-				{
-					isRunning = true;
-				}
-
 				if (!isRunning)
 				{
 					if (rect.position.x + 112 > obj->rect.position.x)
@@ -118,7 +111,7 @@ void Sheep::checkCollision(float Dx, float Dy)
 	}
 }
 
-void Sheep::setInDanger(bool inDanger)
+void Sheep::takeDamage(int amount)
 {
-	this->inDanger = inDanger;
+	isRunning = true;
 }

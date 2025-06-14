@@ -20,7 +20,7 @@ protected:
 public:
 	Entity(sf::Image img, std::string name, sf::FloatRect& rect);
 
-	virtual void update(double time) = 0;
+	virtual void update(float time) = 0;
 	virtual void draw(sf::RenderWindow& w) = 0;
 
 	sf::FloatRect getRect() const;// get position and size

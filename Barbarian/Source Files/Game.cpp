@@ -1,15 +1,14 @@
 #include "../Header Files/Game.h"
 
-
 Game::Game(std::string pathToMapFile, std::string pathToPlayerSprite) :
 	lvl(pathToMapFile),
 	player(sf::Image(pathToPlayerSprite), "Player", lvl.getObjectByReference("player")->rect, lvl.getAllObjectsByReference())
 {
-	view = sf::View(sf::FloatRect(sf::Vector2f(0, 100), sf::Vector2f(512, 288)));
+	view = sf::View(sf::FloatRect({ 0, 100 }, { 512, 288 }));
 
 	window.create(sf::VideoMode({ 512, 288 }), "Barbarian"); // 16:9 ratio small picture (according to tiles size)
-	window.setSize(sf::Vector2u(1536, 864)); // image scale to size of modern monitor
-	window.setPosition(sf::Vector2i(500, 200)); // temporary fix for beign in the centre of the screen
+	window.setSize({ 1536, 864 }); // image scale to size of modern monitor
+	window.setPosition({ 500, 200 }); // temporary fix for beign in the centre of the screen
 
 	window.setFramerateLimit(60); //speed fix
 	window.setView(view);
@@ -17,11 +16,6 @@ Game::Game(std::string pathToMapFile, std::string pathToPlayerSprite) :
 
 void Game::startGame()
 {
-	std::vector<Object> e = lvl.getObjectsByValue("enemy");
-	Object sheep = lvl.getObjectByValue("sheep");
-	sf::Image sheepImage = sf::Image("resources/sprites/sheep.png");
-
-
 	std::vector<Object*> entitiesForEnemy; // entities for enemies to interact with (dynamically)
 	
 	entitiesForEnemy.push_back(lvl.getObjectByReference("player"));
@@ -29,11 +23,10 @@ void Game::startGame()
 		entitiesForEnemy.push_back(obj);
 	
 
-	entities.push_back(new Sheep(sheepImage, "sheep", sheep.rect, entitiesForEnemy));
-
-	for (auto& enemy : e)
+	entities.push_back(new Sheep(sf::Image("resources/sprites/sheep.png"), "sheep", lvl.getObjectByReference("sheep")->rect, entitiesForEnemy));
+	for (auto& enemy : lvl.getObjectsByReference("enemy"))
 	{
-		entities.push_back(new Skeleton(sf::Image("resources/sprites/skeleton.png"),"enemy",enemy.rect, entitiesForEnemy));
+		entities.push_back(new Skeleton(sf::Image("resources/sprites/skeleton.png"),"enemy",enemy->rect, entitiesForEnemy));
 	}
 
 	// run the program as long as the window is open
@@ -46,8 +39,6 @@ void Game::startGame()
 		//time = time / 4500; //slowmo
 
 		window.clear();
-		// update player and camera
-		player.update(time);
 		updateCameraPosition(player.getRect().position.x, player.getRect().position.y); // Move the camera to follow the player
 		window.setView(view); // refresh camera
 
@@ -70,26 +61,38 @@ void Game::startGame()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) player.key["Right"] = true;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) player.key["Space"] = true;
 
-		//update all entities
+
+		lvl.draw(window);
+		//update and draw all entities
 		for (auto& entity : entities)
 		{
 			entity->update(time);
-
-			if (entity->getName() == "sheep" && player.isAttacking)
-			{
-				//std::cout << "SHEEP IN DANGER" <<std::endl;
-				dynamic_cast<Sheep*>(entity)->setInDanger(player.isAttacking);
-			}
-		}
-
-		lvl.draw(window);
-
-		//draw all entities
-		for (auto& entity : entities)
-		{
 			entity->draw(window);
 		}
 
+		player.update(time);
+		if (!player.getHitboxes().empty())
+		{
+			for (auto h : player.getHitboxes())
+			{
+				for (auto& entity : entities)
+				{
+					
+					if (h.getBounds().findIntersection(entity->getRect()))
+					{
+						
+						IDamageable* damageable = dynamic_cast<IDamageable*>(entity);
+						if(damageable)
+						{
+							//todo fix permanent damage
+							damageable->takeDamage(h.getDamage());
+							h.setExpired(true);
+							break;
+						}
+					}
+				}
+			}
+		}
 		player.draw(window);
 		window.display();
 	}

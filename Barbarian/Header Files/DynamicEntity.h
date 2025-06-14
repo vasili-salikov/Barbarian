@@ -11,6 +11,6 @@ protected:
 
 public:
 	DynamicEntity(sf::Image img, std::string name, sf::FloatRect& rect, std::vector<Object*> objectsToInteractWith);
-	virtual void update(double time) override = 0;
+	virtual void update(float time) override = 0;
 	virtual void draw(sf::RenderWindow& w) = 0;
 };

@@ -130,6 +130,8 @@
     <ClCompile Include="Source Files\Animation\Animation.cpp" />
     <ClCompile Include="Source Files\Animation\AnimationManager.cpp" />
     <ClCompile Include="Source Files\DynamicEntity .cpp" />
+    <ClCompile Include="Source Files\Hitbox.cpp" />
+    <ClCompile Include="Source Files\IFighter.cpp" />
     <ClCompile Include="Source Files\Sheep.cpp" />
     <ClCompile Include="Source Files\Skeleton.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
@@ -148,6 +150,9 @@
     <ClInclude Include="Header Files\Animation\Animation.h" />
     <ClInclude Include="Header Files\Animation\AnimationManager.h" />
     <ClInclude Include="Header Files\DynamicEntity.h" />
+    <ClInclude Include="Header Files\Hitbox.h" />
+    <ClInclude Include="Header Files\IDamageable.h" />
+    <ClInclude Include="Header Files\IFighter.h" />
     <ClInclude Include="Header Files\Sheep.h" />
     <ClInclude Include="Header Files\Skeleton.h" />
     <ClInclude Include="Header Files\Entity.h" />

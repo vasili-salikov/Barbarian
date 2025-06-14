@@ -8,17 +8,15 @@ Player::Player(sf::Image img, std::string name, sf::FloatRect& rect, std::vector
 	isAttacking = onGround = onLadder = false;
 	isAlive = true;
 
-	//list of animation declaration 
-	anim.create("stay", texture, 0, 4, 32, 32, 5, 0.003, 32);
-	anim.create("walk", texture, 0, 36, 32, 32, 8, 0.007, 32);
-	anim.create("attack", texture, 0, 68, 32, 32, 7, 0.01, 32);
-	anim.create("hurt", texture, 0, 100, 32, 32, 3, 0.0025, 32);
-	anim.create("down", texture, 128, 144, 32, 32, 1, 0.02, 32);
-	anim.create("crawl", texture, 96, 144, 32, 32, 4, 0.005, 32);
-	anim.create("jump", texture, 0, 36, 32, 32, 3, 0.001, 32);
-	anim.create("die", texture, 0, 132, 32, 32, 7, 0.002, 32);
-	anim.create("ladder", texture, 0, 164, 32, 28, 2, 0.003, 32);
-	anim.create("FusRoDah", texture, 0, 196, 32, 28, 4, 0.002, 32);
+	anim.create("stay", texture, { 0, 4 }, { 32, 32 }, 5, 0.003, { 32, 0 });
+	anim.create("walk", texture, { 0, 36 }, { 32, 32 }, 8, 0.007, { 32, 0 });
+	anim.create("attack", texture, { 0, 68 }, { 32, 32 }, 7, 0.01, { 32, 0 });
+	anim.create("hurt", texture, { 0, 100 }, { 32, 32 }, 3, 0.0025, { 32, 0 });
+	anim.create("down", texture, { 128, 144 }, { 32, 32 }, 1, 0.02, { 32, 0 });
+	anim.create("crawl", texture, { 96, 144 }, { 32, 32 }, 4, 0.005, { 32, 0 });
+	anim.create("jump", texture, { 0, 36 }, { 32, 32 }, 3, 0.001, { 32, 0 });
+	anim.create("die", texture, { 0, 132 }, { 32, 32 }, 7, 0.002, { 32, 0 });
+	anim.create("ladder", texture, { 0, 164 }, { 32, 28 }, 2, 0.003, { 32, 0 });
 }
 
 void Player::handleControls()
@@ -33,26 +31,25 @@ void Player::handleControls()
 	}
 }
 
-void Player::update(double time) 
+void Player::update(float time)
 {
 	handleControls();
 
 	if (isAttacking)
 	{
 		STATE = attack;
-		if (anim.getCurrentFrame() > 6)
+		startAttack(); // create hitbox
+		if (anim.getCurrentFrame() > 6 || activeHitboxes.empty())
 		{
 			isAttacking = false;
+			activeHitboxes.clear();
 			anim.restart();
 		}
 	}
 	else if (!isAlive)
-	{
 		if (anim.getCurrentFrame() > 6)
 			anim.pause();
-		
-	}
-	
+
 	if (anim.getCurrentAnimationName() != getCurrentStateAsString()) // change animation if the state was changed
 	{
 		anim.set(getCurrentStateAsString());
@@ -67,11 +64,11 @@ void Player::update(double time)
 	rect.position.y += dy * time;//move y
 	checkCollision(0, dy); //check collision by y;
 
-	if (health == 0)
+	//update hitbox(es)
+	for (Hitbox& h : activeHitboxes)
 	{
-		isAlive = false;
-		STATE = die;
-		dx = dy = 0;
+		h.setVelocity({ dx,dy });
+		h.update(time);
 	}
 
 	if (!onLadder && isAlive)
@@ -84,17 +81,63 @@ void Player::update(double time)
 void Player::draw(sf::RenderWindow& w)
 {
 #pragma region Make player body visible(debug)
-	//sf::RectangleShape playerRect(sf::Vector2f(rect.size.x, rect.size.y));
-	//playerRect.setFillColor(sf::Color::Green);
-	//playerRect.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
-	//w.draw(playerRect);
+	sf::RectangleShape playerRect(sf::Vector2f(rect.size.x, rect.size.y));
+	playerRect.setFillColor(sf::Color::Green);
+	playerRect.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
+	w.draw(playerRect);
+
+
+	//make player's attack visible
+	for (auto& hitbox : activeHitboxes)
+	{
+		sf::FloatRect hitboxRect = hitbox.getBounds();
+
+		sf::RectangleShape hitboxRectShape(sf::Vector2f(hitboxRect.size.x, hitboxRect.size.y));
+		hitboxRectShape.setFillColor(sf::Color::Red);
+		hitboxRectShape.setPosition(sf::Vector2f(hitboxRect.position.x, hitboxRect.position.y));
+		w.draw(hitboxRectShape);
+	}
 #pragma endregion
 
 	int magicOffsetX = -10; // required x-offset for player's sprite
 	int magicOffsetY = -2; // required y-offset for player's sprite
 
 	anim.flip(dir);
-	anim.draw(w, rect.position.x + magicOffsetX, rect.position.y + magicOffsetY);
+	anim.draw(w, { rect.position.x + magicOffsetX, rect.position.y + magicOffsetY });
+}
+
+void Player::startAttack()
+{
+	if (activeHitboxes.size() == 0)
+	{
+		sf::Vector2f pos = rect.position;
+		if (dir)
+			pos -= {rect.size.x, 0};
+		else
+			pos += {10, 0};
+		activeHitboxes.push_back(Hitbox(pos, rect.size, { dx,dy }, 1, this));
+	}
+}
+void Player::endAttack()
+{
+	activeHitboxes.clear();
+}
+
+void Player::takeDamage(int amount)
+{
+	health -= amount;
+
+	if (health <= 0)
+	{
+		isAlive = false;
+		STATE = die;
+		dx = dy = 0;
+	}
+}
+
+std::vector<Hitbox>& Player::getHitboxes()
+{
+	return activeHitboxes;
 }
 
 void Player::checkCollision(float Dx, float Dy)
@@ -160,6 +203,7 @@ std::string Player::getCurrentStateAsString()
 	case ladder: return "ladder";
 	case crawl: return "crawl";
 	case die: return "die";
+	case hurt: return "hurt";
 	default:     return "stay";
 	}
 }

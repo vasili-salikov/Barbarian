@@ -1,58 +1,31 @@
 #include "../../Header Files/Animation/AnimationManager.h"
 
-void AnimationManager::create(std::string name, sf::Texture& t, int x, int y, int w, int h, int count, double speed, int stepX, int stepY)
+void AnimationManager::create(std::string name, sf::Texture& texture, sf::Vector2i position, sf::Vector2i frameSize, int frameCount, float speed, sf::Vector2i frameStep)
 {
-	animList[name] = Animation(t, x, y, w, h, count, speed, stepX, stepY);
+	animList[name] = Animation(texture, position, frameSize, frameCount, speed, frameStep);
 	currentAnim = name;
 }
 
-void AnimationManager::draw(sf::RenderWindow& w, int x, int y)
+void AnimationManager::draw(sf::RenderWindow& w, sf::Vector2f position)
 {
-	animList[currentAnim].getSprite()->setPosition(sf::Vector2f(x, y));
+	animList[currentAnim].getSprite()->setPosition(position);
 	w.draw(*animList[currentAnim].getSprite());
 }
 
-void AnimationManager::set(sf::String name) 
-{ 
-	currentAnim = name; 
-}
+void AnimationManager::set(sf::String name) { currentAnim = name; }
 
-void AnimationManager::flip(bool b) 
-{ 
-	animList[currentAnim].setFlip(b);
-}
+void AnimationManager::flip(bool b) { animList[currentAnim].setFlip(b); }
 
-void AnimationManager::tick(double time)
-{ 
-	animList[currentAnim].tick(time); 
-}
+void AnimationManager::tick(float time) { animList[currentAnim].tick(time); }
 
-void AnimationManager::pause() 
-{ 
-	animList[currentAnim].setIsPlaying(false); 
-}
+void AnimationManager::pause() { animList[currentAnim].setIsPlaying(false); }
 
-void AnimationManager::play() 
-{ 
-	animList[currentAnim].setIsPlaying(true); 
-}
+void AnimationManager::play() { animList[currentAnim].setIsPlaying(true); }
 
-double AnimationManager::getCurrentFrame()
-{ 
-	return animList[currentAnim].getCurrentFrame(); 
-}
+double AnimationManager::getCurrentFrame() { return animList[currentAnim].getCurrentFrame(); }
 
-std::string AnimationManager::getCurrentAnimationName()
-{
-	return currentAnim;
-}
+std::string AnimationManager::getCurrentAnimationName() { return currentAnim; }
 
-void AnimationManager::setScale(sf::Vector2f factors)
-{ 
-	animList[currentAnim].getSprite()->setScale(factors);
-}
+void AnimationManager::setScale(sf::Vector2f factors) { animList[currentAnim].getSprite()->setScale(factors); }
 
-void AnimationManager::restart() 
-{
-	animList[currentAnim].setCurrentFrame(0);
-}
+void AnimationManager::restart() { animList[currentAnim].setCurrentFrame(0); }
